@@ -1,0 +1,68 @@
+<div class="container">
+
+  <div *ngIf="isModalOpen" class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <div>
+        <div class="form-container">
+          <form [formGroup]="userForm">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" formControlName="firstName" />
+            <div *ngIf="userForm.get('firstName')?.invalid && userForm.get('firstName')?.touched">
+              <small class="text-danger">First Name is required</small>
+            </div>
+            <br />
+    
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" formControlName="lastName" />
+            <div *ngIf="userForm.get('lastName')?.invalid && userForm.get('lastName')?.touched">
+              <small class="text-danger">Last Name is required</small>
+            </div>
+            <br />
+    
+            <label for="email">Email:</label>
+            <input type="email" id="email" formControlName="email" />
+            <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+              <small class="text-danger">Please enter a valid email</small>
+            </div>
+            <br />
+    
+            <button [disabled]="userForm.invalid" type="button" (click)="addUser()">{{formActionText}}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-container">
+    <h2>List of Users</h2>
+    <button class="adduser" type="button" (click)="openModal(null)">+ Add User</button>
+  </div>
+
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of Users">
+          <td>{{ user._id }}</td>
+          <td>{{ user.firstName }}</td>
+          <td>{{ user.lastName }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <button type="button" (click)="editUser(user)">Edit</button>
+            <button type="button" (click)="deleteUser(user._id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
